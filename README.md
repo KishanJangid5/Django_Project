@@ -44,7 +44,7 @@ This is a **Django-based web application** for managing restaurant operations, i
 ## ✨ Features
 
 * **Table Booking:** Users can reserve tables through an online web form.
-* **AJAX Integration:** Enables dynamic form submission without page reload for a smooth experience.
 * **Success Popup:** Displays confirmation popups upon successful bookings or actions.
 * **Order & Feedback Management:** Allows users to place orders and share feedback conveniently.
 * **Django Framework:** Built on Django for secure, scalable, and efficient backend management.
+* **AJAX Integration:** Enables dynamic form submission without page reload for a smooth experience.
