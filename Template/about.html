@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block class %}class="sub_page"{% endblock class %}
+
+{% block about_status %}active{% endblock about_status %}
+
+{% block main %}
+
+  <!-- about section -->
+
+  <section class="about_section layout_padding">
+    <div class="container  ">
+
+      <div class="row">
+        <div class="col-md-6 ">
+          <div class="img-box">
+            <img src="{% static 'images/about-img.png' %} " alt="">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="detail-box">
+            <div class="heading_container">
+              <h2>
+                We are famous because
+              </h2>
+            </div>
+           
+              
+              <div>
+                <p>
+                We are a popular fast food restaurant known for serving fresh, flavorful pizzas and juicy burgers. Our dishes are made with quality ingredients to give you the perfect taste every time. Whether you crave a cheesy pizza or a delicious burger, we make sure every bite feels special.
+              </p>
+             </div>
+             
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end about section -->
+
+{% endblock main %}

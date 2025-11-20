@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="">
+
+  <title> Burger </title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <!-- nice select  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+  <!-- font awesome style -->
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+</head>
+
+<body {% block class %}{% endblock class %}>
+{% csrf_token %}
+
+  <div class="hero_area">
+    <div class="bg-box">
+      <img src="{% static 'images/hero-bg.jpg' %}" alt="">
+    </div>
+
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="{% url "Home" %}">
+            <span>
+              Burger
+            </span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  mx-auto ">
+              <li class="nav-item {% block home_status %}{% endblock home_status %}">
+                <a class="nav-link" href="{% url "Home" %}">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item {% block menu_status %}{% endblock menu_status %}">
+                <a class="nav-link " href="{% url "Menu" %}">Menu</a>
+              </li>
+              <li class="nav-item {% block about_status %}{% endblock about_status %}">
+                <a class="nav-link" href="{% url "About" %}">About</a>
+              </li>
+              <li class="nav-item {% block table_status %}{% endblock table_status %}">
+                <a class="nav-link" href="{% url "Book_Table" %}">Book Table</a>
+              </li>
+              <li class="nav-item {% block feedback_status %}{% endblock feedback_status %}">
+                <a class="nav-link" href="{% url "Feedback_Form" %}">Feedback</a>
+              </li>
+            </ul>
+            <div class="user_option">
+              <div class="user_option">
+                {% if user.is_authenticated %}
+                  <span style="background-color: #f8c6c6; color: #000; padding: 5px 10px; border-radius: 5px; font-weight: bold;">
+                    {{ user.username }}
+                  </span>
+                  <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
+                  <button id="cart-button" class="btn btn-primary">
+                    <i class="fa fa-shopping-cart"></i> Cart
+                  </button>
+                {% else %}
+                  <a href="{% url 'login' %}" class="btn order_online">Login</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+
+    <!-- Cart Popup Modal -->
+    <div id="cart-modal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Your Cart</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul id="cart-items-list">
+              <!-- Cart items will be dynamically loaded here -->
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="checkout-button">Checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checkout Success Modal -->
+    <div id="checkout-success-modal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Order Confirmed</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="checkout-message">Your order has been confirmed and the bill is sent to your email!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% block slider %}{% endblock slider %}
+  </div>
+
+ {% block main %}{% endblock main %}
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 footer-col">
+          <div class="footer_contact">
+            <h4>
+              Contact Us
+            </h4>
+            <div class="contact_link_box">
+              <a href="">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Location
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call +01 1234567890
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  Sunil@123gmail.com
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 footer-col">
+          <div class="footer_detail">
+            <a href="" class="footer-logo">
+              Burger
+            </a>
+            <p>
+            </p>
+            <div class="footer_social">
+              <a href="">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-linkedin" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-pinterest" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 footer-col">
+          <h4>
+            Opening Hours
+          </h4>
+          <p>
+            Everyday
+          </p>
+          <p>
+            10.00 Am -10.00 Pm
+          </p>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p>
+          created by kishan
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script src="{% static 'js/bootstrap.js' %} "></script>
+  <!-- owl slider -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- isotope js -->
+  <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+  <!-- nice select -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+  <!-- custom js -->
+  <script src="{% static 'js/custom.js' %} "></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+    <!-- JavaScript for Cart Button -->
+    <script>
+      function loadCartItems() {
+        fetch('/get-cart-items/')
+          .then(response => response.json())
+          .then(data => {
+            const cartList = document.getElementById('cart-items-list');
+            cartList.innerHTML = '';
+            if (data.items && data.items.length > 0) {
+              data.items.forEach(item => {
+                cartList.innerHTML += `
+                  <li class="cart-item" data-item-id="${item.id}">
+                    ${item.name} - ${item.quantity} x $${item.price} = $${item.total}
+                    <button class="btn btn-sm btn-success increase-btn" data-item-id="${item.id}">+</button>
+                    <button class="btn btn-sm btn-warning decrease-btn" data-item-id="${item.id}">-</button>
+                  </li>
+                `;
+              });
+            } else {
+              cartList.innerHTML = '<li>Your cart is empty.</li>';
+            }
+          })
+          .catch(error => console.error('Error fetching cart items:', error));
+      }
+
+      document.getElementById('cart-button').addEventListener('click', function() {
+        loadCartItems();
+        $('#cart-modal').modal('show');
+      });
+
+      // Event delegation for increase and decrease buttons
+      document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('increase-btn')) {
+          const itemId = event.target.getAttribute('data-item-id');
+          updateCart(itemId, 'increase');
+        } else if (event.target.classList.contains('decrease-btn')) {
+          const itemId = event.target.getAttribute('data-item-id');
+          updateCart(itemId, 'decrease');
+        }
+      });
+
+      function updateCart(itemId, action) {
+        fetch('/update-cart/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+          },
+          body: `item_id=${itemId}&action=${action}`
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.message === 'Cart updated') {
+            loadCartItems(); // Reload cart items after update
+          }
+        })
+        .catch(error => console.error('Error updating cart:', error));
+      }
+
+      document.getElementById('checkout-button').addEventListener('click', function() {
+        fetch('/checkout/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.message) {
+            // Update the modal message and show the success modal
+            document.getElementById('checkout-message').textContent = data.message;
+            $('#cart-modal').modal('hide'); // Hide cart modal
+            $('#checkout-success-modal').modal('show'); // Show success modal
+            loadCartItems(); // Reload cart to show it's empty
+          } else {
+            alert('Error: ' + data.error);
+          }
+        })
+        .catch(error => console.error('Error during checkout:', error));
+      });
+    </script>
+</body>
+
+</html>
