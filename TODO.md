@@ -1,0 +1,5 @@
+- [x] Edit Restaurant_Web_Project/Resturant_Project/Template/base.html to change the footer-info p content to "created by kishan"
+- [x] Change the email in footer from "demo@gmail.com" to "Sunil@123gmail.com"
+- [x] Remove the text from the footer description paragraph
+- [x] Change the map navigation in book_table.html to empty
+- [x] Remove the map_container div from book_table.html
